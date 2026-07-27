@@ -1,6 +1,10 @@
 import type { ReactElement } from 'react'
 import type { DemoMeta } from '@/components/guide/types'
 import {
+  demoMeta as eveFrameworkMeta,
+  DemoSteps as EveFrameworkSteps
+} from './build-an-ai-agent-with-vercels-eve-framework'
+import {
   demoMeta as alfredMeta,
   DemoSteps as AlfredSteps
 } from './build-a-personal-ai-assistant-with-eve'
@@ -20,6 +24,10 @@ export interface DemoEntry {
  * newest recording goes first.
  */
 const demos: Record<string, DemoEntry> = {
+  'build-an-ai-agent-with-vercels-eve-framework': {
+    meta: eveFrameworkMeta,
+    Steps: EveFrameworkSteps
+  },
   'build-a-startup-landing-page-with-v0': {
     meta: tarsMeta,
     Steps: TarsSteps
