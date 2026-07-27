@@ -1,0 +1,26 @@
+/* Square counterpart to the search trigger it sits beside, down to the border,
+ * radius and hover treatment. The fixed height matches that button's. */
+.toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  color: rgb(115 115 115);
+  border: 1px solid rgb(128 128 128 / 0.28);
+  border-radius: 8px;
+  background: rgb(128 128 128 / 0.06);
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+.toggle:hover {
+  color: rgb(82 82 82);
+  border-color: rgb(128 128 128 / 0.5);
+  background: rgb(128 128 128 / 0.1);
+}
+
+:global(.dark) .toggle:hover {
+  color: rgb(212 212 212);
+}

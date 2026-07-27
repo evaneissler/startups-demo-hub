@@ -1,0 +1,315 @@
+/* Demo hub gallery. Colors and spacing are keyed to Nextra's theme variables so
+ * light/dark and accent changes flow through without overrides. */
+
+/* Horizontal inset comes from the Nextra content wrapper (see
+ * app/guide-chrome.css), so this only owns vertical rhythm. */
+.hub {
+  width: 100%;
+  padding: 0.5rem 0 3rem;
+}
+
+/* Page heading ------------------------------------------------------- */
+.hubHead {
+  max-width: 44rem;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation)
+      var(--nextra-primary-lightness)
+  );
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.hubTitle {
+  margin: 0;
+  color: var(--guide-heading-color, currentColor);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.hubLead {
+  margin: 0.9rem 0 0;
+  color: rgb(82 82 82);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+:global(.dark) .hubLead {
+  color: rgb(163 163 163);
+}
+
+/* Sections ----------------------------------------------------------- */
+.heroSection {
+  margin-bottom: 3rem;
+}
+
+.sectionLabel {
+  margin: 0 0 1.1rem;
+  color: var(--guide-heading-color, currentColor);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+/* Cards -------------------------------------------------------------- */
+.card,
+.heroCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.heroCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  align-items: center;
+}
+
+/* Thumbnail ---------------------------------------------------------- */
+.thumbLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+.thumbLink:focus-visible {
+  outline: 2px solid
+    hsl(
+      var(--nextra-primary-hue) var(--nextra-primary-saturation)
+        var(--nextra-primary-lightness)
+    );
+  outline-offset: 3px;
+}
+
+.thumbFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  /* Neutral rather than black: the clip mask antialiases at the corners, so a
+   * dark placeholder reads as a hairline outline behind the video. */
+  background: rgb(128 128 128 / 0.08);
+  transition: box-shadow 150ms ease;
+}
+
+.thumbLink:hover .thumbFrame {
+  box-shadow: 0 12px 34px -20px rgba(0, 0, 0, 0.5);
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.playBadge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  color: #fff;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(4px);
+  transform: translate(-50%, -50%);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.playBadge svg {
+  margin-left: 2px;
+}
+
+/* Revealed on hover so the thumbnail reads as artwork at rest. Gated on a hover
+ * capable pointer: touch has no hover state, so the badge stays put there. */
+@media (hover: hover) {
+  .playBadge {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  .thumbLink:hover .playBadge,
+  .thumbLink:focus-visible .playBadge {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.durationBadge {
+  position: absolute;
+  right: 0.55rem;
+  bottom: 0.55rem;
+  padding: 0.15rem 0.4rem;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border-radius: 5px;
+  background: rgb(0 0 0 / 0.75);
+}
+
+/* Card text ---------------------------------------------------------- */
+.cardBody {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.cardTitle {
+  margin: 0;
+  color: var(--guide-heading-color, currentColor);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.heroCard .cardTitle {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+}
+
+.cardTitleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Underline rather than an accent shift — the accent is near-black now. */
+.cardTitleLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cardSummary {
+  display: none;
+  margin: 0.55rem 0 0;
+  color: rgb(82 82 82);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.heroCard .cardSummary {
+  display: block;
+  font-size: 0.95rem;
+}
+
+:global(.dark) .cardSummary {
+  color: rgb(163 163 163);
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+  color: rgb(115 115 115);
+  font-size: 0.78rem;
+}
+
+.cardMeta > * + *::before {
+  margin-right: 0.5rem;
+  content: '·';
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 0.12rem 0.5rem;
+  color: rgb(115 115 115);
+  font-size: 0.72rem;
+  border: 1px solid rgb(128 128 128 / 0.22);
+  border-radius: 999px;
+}
+
+/* Actions ------------------------------------------------------------ */
+.cardActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+/* Solid fill in the monotone accent — near-black on light, near-white on dark —
+ * so the CTA carries the same contrast as the headings rather than reading as a
+ * washed-out outline. */
+.primaryAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  color: rgb(250 250 250);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  border-radius: 8px;
+  background: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation)
+      var(--nextra-primary-lightness)
+  );
+  transition: opacity 150ms ease;
+}
+
+:global(.dark) .primaryAction {
+  color: rgb(23 23 23);
+}
+
+.primaryAction:hover {
+  opacity: 0.82;
+}
+
+.secondaryAction {
+  color: rgb(115 115 115);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.secondaryAction:hover {
+  color: hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation)
+      var(--nextra-primary-lightness)
+  );
+}
+
+.empty {
+  color: rgb(115 115 115);
+}
+
+@media (max-width: 860px) {
+  .heroCard {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}

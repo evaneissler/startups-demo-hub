@@ -1,0 +1,66 @@
+/* Sits in the theme's right-hand rail, so it borrows the sidebar's type scale
+ * and hover treatment to read as the mirror image of the step outline. */
+.rail {
+  /* Cancels the rail's own horizontal margin so rows span its full width, the
+   * way sidebar rows do. */
+  margin: 0 -0.5rem;
+  padding-top: 0.25rem;
+  /* The rail's own row is sized to its content, so long lists have to scroll
+   * here rather than spill past the sticky column. */
+  max-height: calc(100vh - var(--nextra-navbar-height) - 5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.title {
+  margin: 0 0.5rem 0.75rem;
+  color: var(--guide-heading-color, currentColor);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.group {
+  margin: 1rem 0.5rem 0.35rem;
+  color: var(--x-color-neutral-500);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--x-color-neutral-600);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.link:hover {
+  background: rgb(128 128 128 / 0.12);
+  color: var(--guide-heading-color, currentColor);
+}
+
+.icon {
+  display: flex;
+  flex: none;
+  color: var(--x-color-neutral-400);
+}
+
+.link:hover .icon {
+  color: inherit;
+}
+
+:global(.dark) .link {
+  color: var(--x-color-neutral-400);
+}

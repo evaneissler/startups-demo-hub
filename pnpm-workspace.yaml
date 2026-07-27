@@ -1,0 +1,8 @@
+allowBuilds:
+  # Next.js image optimization needs sharp's native binary built on install.
+  sharp: true
+
+# Mirrors the npm "overrides" in package.json, which pnpm 11 does not read.
+# Nextra's zod prop schemas reject valid props on zod 4.4.x.
+overrides:
+  zod: 4.3.6

@@ -1,0 +1,285 @@
+/* Command palette for the demo catalog. Neutral greys and Nextra's own
+ * background variable keep it in step with the rest of the site's monotone
+ * palette in both themes. */
+
+/* Navbar trigger ------------------------------------------------------ */
+.trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.55rem;
+  color: rgb(115 115 115);
+  font-size: 0.85rem;
+  border: 1px solid rgb(128 128 128 / 0.28);
+  border-radius: 8px;
+  background: rgb(128 128 128 / 0.06);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+@media (min-width: 768px) {
+  .trigger {
+    width: 15rem;
+  }
+}
+
+.trigger:hover {
+  color: rgb(82 82 82);
+  border-color: rgb(128 128 128 / 0.5);
+  background: rgb(128 128 128 / 0.1);
+}
+
+:global(.dark) .trigger:hover {
+  color: rgb(212 212 212);
+}
+
+.triggerLabel {
+  flex: 1;
+  text-align: start;
+}
+
+.kbd {
+  padding: 0.05rem 0.3rem;
+  color: rgb(115 115 115);
+  font-size: 0.7rem;
+  font-family: inherit;
+  line-height: 1.4;
+  border: 1px solid rgb(128 128 128 / 0.3);
+  border-radius: 4px;
+  background: rgb(128 128 128 / 0.08);
+}
+
+/* Dialog -------------------------------------------------------------- */
+/* A modal dialog is centered by the UA with `inset: 0; margin: auto`, but
+ * Tailwind's preflight (bundled with Nextra) zeroes the margin on every
+ * element, so the centering is restored here. `display` is set on `[open]` so
+ * the UA's `display: none` still hides it when closed. */
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: min(44rem, calc(100vw - 2rem));
+  height: fit-content;
+  max-height: min(34rem, calc(100vh - 6rem));
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  color: inherit;
+  border: 1px solid rgb(128 128 128 / 0.28);
+  border-radius: 14px;
+  background: var(--x-color-nextra-bg);
+  box-shadow: 0 24px 64px -24px rgb(0 0 0 / 0.5);
+}
+
+.dialog[open] {
+  display: flex;
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.panel {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+
+/* Input row ----------------------------------------------------------- */
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgb(128 128 128 / 0.2);
+}
+
+.searchRowIcon {
+  flex-shrink: 0;
+  color: rgb(115 115 115);
+}
+
+.input {
+  min-width: 0;
+  flex: 1;
+  color: var(--guide-heading-color, currentColor);
+  font-size: 0.95rem;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgb(115 115 115);
+}
+
+.closeBtn {
+  flex-shrink: 0;
+  padding: 0.15rem 0.4rem;
+  color: rgb(115 115 115);
+  font-size: 0.72rem;
+  border: 1px solid rgb(128 128 128 / 0.3);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  color: rgb(82 82 82);
+  border-color: rgb(128 128 128 / 0.55);
+}
+
+:global(.dark) .closeBtn:hover {
+  color: rgb(212 212 212);
+}
+
+/* Results ------------------------------------------------------------- */
+.body {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.85rem 0.6rem 1rem;
+}
+
+.sectionLabel {
+  margin: 0 0 0.5rem;
+  padding: 0 0.5rem;
+  color: rgb(115 115 115);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+[data-active] > .result {
+  background: rgb(128 128 128 / 0.12);
+}
+
+.thumbFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 7.5rem;
+  flex-shrink: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  /* Neutral rather than black: the clip mask antialiases at the corners, so a
+   * dark placeholder reads as a hairline outline behind the video. */
+  background: rgb(128 128 128 / 0.08);
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.durationBadge {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  padding: 0.05rem 0.25rem;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border-radius: 4px;
+  background: rgb(0 0 0 / 0.75);
+}
+
+.resultBody {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.resultTitle {
+  color: var(--guide-heading-color, currentColor);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.resultSummary {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgb(115 115 115);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.resultMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+  color: rgb(115 115 115);
+  font-size: 0.72rem;
+}
+
+.tag {
+  padding: 0.02rem 0.4rem;
+  border: 1px solid rgb(128 128 128 / 0.22);
+  border-radius: 999px;
+}
+
+.empty {
+  margin: 0;
+  padding: 1.25rem 0.5rem;
+  color: rgb(115 115 115);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+/* Footer -------------------------------------------------------------- */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.55rem 1rem;
+  color: rgb(115 115 115);
+  font-size: 0.72rem;
+  border-top: 1px solid rgb(128 128 128 / 0.2);
+}
+
+.footer .kbd {
+  margin-right: 0.15rem;
+}
+
+@media (max-width: 520px) {
+  .thumbFrame {
+    width: 5.5rem;
+  }
+
+  .footer {
+    display: none;
+  }
+}

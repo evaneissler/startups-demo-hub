@@ -1,0 +1,83 @@
+/* Shared horizontal inset for the site header, the MDX pages and the demo
+ * playback layout, so every route lines up inside the same
+ * `--nextra-content-width` box.
+ *
+ * 1rem is not arbitrary: the two columns Nextra owns already sit that far in
+ * from the box — the sidebar's scroll area is `p-4` and the toc's inner grid is
+ * `mx-4`. Anything else leaves the navbar visibly narrower than the guide
+ * beneath it. */
+:root {
+  --guide-page-padding-x: 1rem;
+}
+
+header.nextra-navbar > nav {
+  padding-left: max(env(safe-area-inset-left), var(--guide-page-padding-x));
+  padding-right: max(env(safe-area-inset-right), var(--guide-page-padding-x));
+}
+
+/* Nextra's MDX content column ships `px-4 md:px-12`, which leaves the hub and
+ * build guides inset further than the navbar and the demo route (the latter
+ * renders outside this column). `#nextra-skip-nav` is the column's own anchor,
+ * so this matches MDX pages only. The sidebar and toc carry their own 1rem of
+ * padding, so the gap either side of the prose stays a comfortable 2rem. */
+article:has(> #nextra-skip-nav) {
+  padding-left: max(env(safe-area-inset-left), var(--guide-page-padding-x));
+  padding-right: max(env(safe-area-inset-right), var(--guide-page-padding-x));
+}
+
+:root {
+  /* Nextra builds primary-100 as `lightness + 49%`, which lands on a mid grey
+   * once the accent is near-black. It is the only opaque accent background in
+   * light mode (the active nav/sidebar item), so it gets a light neutral. */
+  --x-color-primary-100: hsl(0 0% 92%);
+
+  /* Nextra's body text and headings use its `slate` ramp, which carries a blue
+   * cast (e.g. slate-900 is `oklch(20.8% 0.042 265.755)`). Remapping the ramp
+   * itself neutralises every consumer at once. */
+  --x-color-slate-50: oklch(98.5% 0 0);
+  --x-color-slate-100: oklch(97% 0 0);
+  --x-color-slate-200: oklch(92.2% 0 0);
+  --x-color-slate-700: oklch(37.1% 0 0);
+  --x-color-slate-900: oklch(0% 0 0);
+
+  /* Titles rendered by our own components, which otherwise inherit body text. */
+  --guide-heading-color: #000;
+}
+
+.dark {
+  --guide-heading-color: #fff;
+}
+
+/* Nextra nests the active page's outline under its sidebar link. A guide's title
+ * already headlines the page, so the duplicate link is dropped and the step
+ * outline is promoted to the sidebar's top level. `li.active` is the theme's own
+ * hook for the current page — it queries the same selector to scroll it into
+ * view. */
+:is(.nextra-sidebar, .nextra-mobile-nav) li.active:has(> ul) > a {
+  display: none;
+}
+
+:is(.nextra-sidebar, .nextra-mobile-nav) li.active:has(> ul) > ul {
+  margin-inline-start: 0;
+  padding-top: 0;
+  padding-inline-start: 0;
+}
+
+/* The rule that draws the tree's vertical line, which has nothing to branch
+ * from once the outline is top level. */
+:is(.nextra-sidebar, .nextra-mobile-nav) li.active:has(> ul) > ul::before {
+  content: none;
+}
+
+/* Outline links carry a "#" glyph, which reads as noise now that the steps are
+ * the sidebar's top-level list rather than anchors nested under a page. */
+:is(.nextra-sidebar, .nextra-mobile-nav) a[href^='#']::before {
+  content: none;
+}
+
+/* Nextra fades a heading in over 1.5s once it becomes the URL's :target, which
+ * reads as a flash when jumping between steps. Its utility sits in
+ * `@layer utilities`, so this unlayered rule wins whatever the specificity. */
+:is(h1, h2, h3, h4, h5, h6):target {
+  animation: none;
+}
