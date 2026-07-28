@@ -8,10 +8,6 @@ import {
   demoMeta as tarsMeta,
   DemoSteps as TarsSteps
 } from './build-a-startup-landing-page-with-v0'
-import {
-  demoMeta as workflowsMeta,
-  DemoSteps as WorkflowsSteps
-} from './build-a-durable-workflow-with-vercel-workflows'
 
 export interface DemoEntry {
   meta: DemoMeta
@@ -24,10 +20,6 @@ export interface DemoEntry {
  * newest recording goes first.
  */
 const demos: Record<string, DemoEntry> = {
-  'build-a-durable-workflow-with-vercel-workflows': {
-    meta: workflowsMeta,
-    Steps: WorkflowsSteps
-  },
   'build-a-startup-landing-page-with-v0': {
     meta: tarsMeta,
     Steps: TarsSteps
